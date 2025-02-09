@@ -1,4 +1,4 @@
-
+console.log("tanclicky 3la profile1");
 // fetch('http://localhost:8000/api/user/', {
 //         method: 'GET',
 //         credentials: 'include',
@@ -143,6 +143,7 @@ ScrollforEachContainer('HistoryContainer', 'HistoryList');
             console.log("No current level found for the player's score.");
         }
     }
-    updateAchievements();
+
+updateAchievements();
 
 

@@ -1,11 +1,11 @@
-function sendMessage() {
+function sendMessage(selectedUser, currentUser) {
     const chatInput = document.getElementById('chat-input');
     const chatBox = document.getElementById('chat-box');
     const message = chatInput.value.trim();
 
-    if (!message) return; // Don't send empty messages
+    if (!message) return;
 
-    const data = JSON.stringify({ message: message });
+    const data = JSON.stringify({ message: message , roomName: `${currentUser}-${selectedUser}`});
     console.log('dataaaa : ', data);
 
     fetch('http://localhost:8000/messageinput/', {
@@ -33,7 +33,13 @@ function sendMessage() {
     console.log(`Message sent: ${message}`);
 }
 
-function showMessages(selectedUser) {
+function handleEnterKey(event, selectedUser, currentUser) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage(selectedUser, currentUser);
+    }
+}
+function showMessages(selectedUser, currentUser) {
     console.log('helllo db hena f chat');
 
     // Show the chat-container and hide the profile-container
@@ -56,16 +62,14 @@ function showMessages(selectedUser) {
     const chatInput = document.getElementById('chat-input');
     const sendButton = document.getElementById('send-button');
 
-    // ✅ Fixing button event listener
-    sendButton.onclick = sendMessage;
+    chatInput.removeEventListener("keydown", chatInput._handleEnterKey);
 
-    // ✅ Fixing "Enter" key event
-    chatInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Prevents newline in input field
-            sendMessage();
-        }
-    });
+    chatInput._handleEnterKey = (event) => handleEnterKey(event, selectedUser, currentUser);
+
+    chatInput.addEventListener("keydown", chatInput._handleEnterKey);
+
+    sendButton.onclick = () => sendMessage(selectedUser, currentUser);
+
 }
 
 function userList(users, currentUser) {
@@ -82,7 +86,7 @@ function userList(users, currentUser) {
         
         allUsers.addEventListener('click', () => {
             console.log(`Clicked on user: ${user}`);
-            showMessages(user);
+            showMessages(user, currentUser);
         });
     });
 }

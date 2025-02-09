@@ -7,11 +7,14 @@ WORKDIR /app
 # Copy the requirements file from app/pingpong
 COPY app/pingpong/requirements.txt .
 
+
+
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the Django project files into the container
-COPY app/pingpong/ . 
+COPY app/chatproject .
+
 
 # Expose the Django development server port
 EXPOSE 8000

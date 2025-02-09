@@ -119,47 +119,75 @@ function SettingContent(){
     });
 }
 
-function EditContent(){
+function EditContent() {
     const info = document.querySelector('.Infos');
+    const imageInput = document.getElementById('profile-update');
+    const fileNameDisplay = document.getElementById("file-name");
 
-    info.addEventListener("submit", event =>{
-        event.preventDefault();
-        
-        const dataForm = new FormData(info);
-        // for (let [key, value] of dataForm.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
-        const imageInput = document.getElementById('profile-update');
-        const file = imageInput.files[0]; // Get the selected file
-            
-            // Add the file to FormData
-        if (file)
-            dataForm.append('image_link', file);
-        console.log(10000);
-        // console.log(dataForm.get('City'));
-        console.log( "image ::::" + dataForm.get('image_link'));
-        const data = new URLSearchParams(dataForm);
-        fetch('http://localhost:8000/profile/update/', {
-            method : 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                // 'X-CSRFToken': csrfToken, // Include CSRF token
-            },
-            body : data
-        }).then(res => res.json())
-          .then(data => console.log(data))
-          .catch(error => console.log(error));
+    // File input change listener
+    imageInput.addEventListener("change", function () {
+        let fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
+        fileNameDisplay.textContent = fileName;
+        console.log('File selected:', fileName);
     });
 
-    // document.getElementById('Avatar').addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     LoadContent('Avatar1');
-    //     navigateTo('Avatar1', '../Css/avatar1.css',  '/Avatar1');
+    info.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    // });
-    
+        const formData = new FormData(info);
+        const file = imageInput.files[0];
+
+        let imageUrl = null;
+        
+        // 1️⃣ Upload image first
+        if (file) {
+            const fileFormData = new FormData();
+            fileFormData.append('image', file);
+
+            try {
+                // const fileUploadRes = await fetch('http://localhost:8000/upload/', {
+                //     method: 'POST',
+                //     credentials: 'include',
+                //     body: fileFormData
+                // });
+
+                const fileUploadData = await fileUploadRes.json();
+                imageUrl = fileUploadData.imageUrl;
+            } catch (error) {
+                console.error('File upload failed:', error);
+                // return;
+            }
+        }
+        console.log('File selected submit');
+
+        // 2️⃣ Prepare JSON data
+        const jsonData = {
+            fullname: formData.get('fullname'),
+            username: formData.get('username'),
+            city: formData.get('City'),
+            email: formData.get('email'),
+            image_link: imageUrl || null
+        };
+
+        console.log("JSON Data to send:", jsonData);
+
+        // 3️⃣ Send JSON data
+        fetch('http://localhost:8000/profile/update/', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(res => res.json())
+        .then(data => console.log('Server response:', data))
+        .catch(error => console.log('Error:', error));
+
+        navigateTo('settingContent', '../Css/Setting.css', '/Settings');
+    });
 }
+
 
 
 // function ProfileContent(){
@@ -208,8 +236,6 @@ function LoadContent(templateId){
             navigateTo('firstContent', '../Css/first_page.css',  '/LoginPage')
         });
     }
-    // if(templateId === 'ChatContent')
-    //     ChatContent();
     if(templateId === 'homeContent')
         HomeContent();
     if(templateId === 'gameContent')
@@ -397,11 +423,11 @@ function checkUserLoginFromBackend() {
             else
                 navigateTo('openningContent', '../Css/openning.css',  '/OpeningPage');
             document.getElementById('home').addEventListener('click', (e) => {
+                console.log("hoooome");
                 e.preventDefault();
                 navigateTo('homeContent', '../Css/Home.css',  '/Home');
             });
             document.getElementById('profile').addEventListener('click', (e) => {
-                console.log("profiiiiiile");
                 e.preventDefault();
                 navigateTo('ProfileContent', '../Css/Profile.css',  '/Profile');
             });

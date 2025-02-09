@@ -362,7 +362,9 @@
 					<img src="" alt="Your Image">
 				</div>
 				<form class="Infos" >
-					<input name="image_link" placeholder="Profile Image" type="file" id="profile-update"/>
+					<label for="profile-update" class="custom-file-upload">Upload Profile Image</label>
+					<input name="image_link" type="file" id="profile-update" accept="image/*"/>
+					<span id="file-name">No file chosen</span>
 					<input name="fullname" type="text" placeholder="Full Name" class="f_name" />
 					<input name="username" type="text" placeholder="Username" class="f_name" />
 					<input name="City" type="text" placeholder="City" class="f_name" />
