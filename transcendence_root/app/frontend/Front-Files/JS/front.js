@@ -345,12 +345,12 @@ function LoadContent(templateId){
     }
 };
 
-function checkWindowSize() {
-    if (window.innerWidth <= 800)
-        navigateTo('mobile', '../Css/Mobile.css',  'mobile');
-}
+// function checkWindowSize() {
+//     if (window.innerWidth <= 800)
+//         navigateTo('mobile', '../Css/Mobile.css',  'mobile');
+// }
 
-window.addEventListener('resize', checkWindowSize);
+// window.addEventListener('resize', checkWindowSize);
 
 
 // function checkUserLoginFromBackend() {
@@ -406,7 +406,55 @@ window.addEventListener('resize', checkWindowSize);
 //         navigateTo('openningContent', '../Css/openning.css',  '/OpeningPage');
 //     });
 // }
+function searchForUsers() {
+    // Sample list of users (Replace this with actual user data from your backend)
+    const users = [
+        { username: "User1", profilePic: "../assets/images/fouaouri.jpeg" },
+        { username: "User2", profilePic: "../assets/images/fouaouri.jpeg" },
+        { username: "User3", profilePic: "../assets/images/fouaouri.jpeg" },
+        { username: "User4", profilePic: "../assets/images/fouaouri.jpeg" }
+    ];
 
+    const searchInput = document.getElementById("search-input1");
+    const searchResults = document.createElement("div"); // Create a div for results
+    searchResults.classList.add("search-results");
+    document.body.appendChild(searchResults); // Append it somewhere in the body
+
+    searchInput.addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (searchTerm === "") {
+            searchResults.style.display = "none";
+            return;
+        }
+
+        const filteredUsers = users.filter(user => 
+            user.username.toLowerCase().includes(searchTerm)
+        );
+
+        if (filteredUsers.length === 0) {
+            searchResults.innerHTML = "<p>No results found</p>";
+        } else {
+            filteredUsers.forEach(user => {
+                const userElement = document.createElement("div");
+                userElement.classList.add("search-item");
+                userElement.innerHTML = `
+                    <img src="${user.profilePic}" alt="${user.username}">
+                    <span>${user.username}</span>
+                `;
+                userElement.addEventListener("click", () => {
+                    searchInput.value = user.username; // Set input value on selection
+                    searchResults.style.display = "none"; // Hide results
+                });
+                searchResults.appendChild(userElement);
+            });
+        }
+
+        searchResults.style.display = "block";
+});
+
+}
 function checkUserLoginFromBackend() {
     // fetch('http://localhost:8000/api/check-authentication/', {
     //     method: 'GET',
@@ -423,7 +471,6 @@ function checkUserLoginFromBackend() {
             else
                 navigateTo('openningContent', '../Css/openning.css',  '/OpeningPage');
             document.getElementById('home').addEventListener('click', (e) => {
-                console.log("hoooome");
                 e.preventDefault();
                 navigateTo('homeContent', '../Css/Home.css',  '/Home');
             });
@@ -449,6 +496,9 @@ function checkUserLoginFromBackend() {
                 e.preventDefault();
                 navigateTo('ChatContent', '../Css/Chat.css', '/Chat');
             });
+            document.getElementById('search-input1').addEventListener('click', (e) =>{
+                searchForUsers();
+            })
         // } 
         // else {
         //     console.log(data.isLoggedIn);
@@ -471,12 +521,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    checkWindowSize();
+    // checkWindowSize();
     checkUserLoginFromBackend();
 });
 
 function handleRouting(path){
-    console.log("path : " + path);
     switch (path) {
         case '/LoginPage':
             navigateTo('homeContent', '../Css/Home.css', '/Home');

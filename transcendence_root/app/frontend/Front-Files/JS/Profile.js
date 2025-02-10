@@ -1,4 +1,3 @@
-console.log("tanclicky 3la profile1");
 // fetch('http://localhost:8000/api/user/', {
 //         method: 'GET',
 //         credentials: 'include',
@@ -84,10 +83,10 @@ function ScrollforEachContainer(containerContainer, ContainerList){
 
 ScrollforEachContainer('friendsContainer', 'friendsList');
 ScrollforEachContainer('HistoryContainer', 'HistoryList');
+ScrollforEachContainer('deblockContainer', 'blockList');
 
 // chage the button after following a profile
     document.querySelectorAll('.follow').forEach(button => {
-        console.log('follow dkhel');
         button.addEventListener('click', (e) => {
             console.log('follow');
             e.preventDefault();
@@ -103,6 +102,21 @@ ScrollforEachContainer('HistoryContainer', 'HistoryList');
         });
     });
 
+    document.querySelectorAll('.Deblock').forEach(button => {
+        console.log('Blocklist');
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const wasBlocked = button.classList.contains('block');
+            
+            if (wasBlocked) {
+                button.textContent = '🆓 Deblock';
+                button.classList.remove('block');
+            } else {
+                button.textContent = 'Block';
+                button.classList.add('block');
+            }
+        });
+    });
 
     // Achienvement games Progress 
     

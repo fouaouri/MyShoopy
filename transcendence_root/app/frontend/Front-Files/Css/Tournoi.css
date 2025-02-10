@@ -168,6 +168,83 @@ button {
     color: transparent;
 }
 
+.search-box1 {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    position : absolute;
+    bottom: 1%;
+    left: 2%;
+    margin: 15px;
+}
+
+.search-box1 .input-wrapper1 {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box1 input {
+    font-family: monospace;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    width: 70%;
+    box-shadow: 0 2px 4px rgba(187, 161, 161, 0.1);
+}
+
+.search-box1 .material-icons1 {
+    width: 8%;
+    margin-right: 3%;
+}
+
+input {
+    border: none;
+    border-radius: 20px;
+    width: 60%;
+    color: hsl(122, 100%, 16%);
+}
+
+input::placeholder {
+    color: rgba(50, 52, 50, 0.612);
+    font-weight: 300;
+    margin-left: 20px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.search-results {
+    position: absolute;
+    bottom: 8%;
+    left: 5%;
+    width: 15.7%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #3e7735ad;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.search-item:hover {
+    background-color: #f0f0f0;
+}
 @media (max-width : 1400px){
 
     .logo {
@@ -305,4 +382,139 @@ button {
         color: transparent;
     }
 
+}
+
+/* Medium screens (tablets and small laptops) */
+@media (max-width: 1024px) {
+    .logo {
+        left: 42%;
+        width: 90px;
+    }
+
+    .rectang h1 {
+        font-size: 300%;
+        top: 15%;
+    }
+
+    .rectang h2 {
+        font-size: 100%;
+        bottom: 30%;
+    }
+
+    .circle {
+        width: 25%;
+        height: 30%;
+        top: 25%;
+        right: 5%;
+    }
+
+    .button-container {
+        top: 70%;
+    }
+
+    .button-container button {
+        font-size: 140%;
+    }
+
+    .button-Tournoi button {
+        font-size: 190%;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+    .logo {
+        left: 40%;
+        width: 70px;
+    }
+
+    .rectang h1 {
+        font-size: 250%;
+        top: 10%;
+        left: 5%;
+    }
+
+    .rectang h2 {
+        font-size: 90%;
+        bottom: 25%;
+        left: 5%;
+    }
+
+    .circle {
+        width: 40%;
+        height: 25%;
+        top: 30%;
+        right: 5%;
+    }
+
+    .button-container {
+        top: 75%;
+        left: 5%;
+    }
+
+    .button-container button {
+        font-size: 120%;
+    }
+
+    .button-Tournoi button {
+        font-size: 170%;
+        top: 3%;
+        right: 20%;
+    }
+
+    .button-Profile,
+    .button-Game,
+    .button-Chat,
+    .button-Settings,
+    .button-Home {
+        top: 3%;
+        font-size: 120%;
+    }
+}
+
+/* Extra Small Screens (small phones) */
+@media (max-width: 480px) {
+    .logo {
+        left: 38%;
+        width: 60px;
+    }
+
+    .rectang h1 {
+        font-size: 200%;
+        top: 8%;
+    }
+
+    .rectang h2 {
+        font-size: 80%;
+        bottom: 20%;
+    }
+
+    .circle {
+        width: 50%;
+        height: 20%;
+        top: 35%;
+    }
+
+    .button-container {
+        top: 78%;
+        left: 5%;
+    }
+
+    .button-container button {
+        font-size: 100%;
+    }
+
+    .button-Tournoi button {
+        font-size: 150%;
+        top: 2%;
+        right: 15%;
+    }
+
+    .button-Profile,
+    .button-Game,
+    .button-Chat,
+    .button-Settings,
+    .button-Home {
+        font-size: 100%;
+    }
 }
